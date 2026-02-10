@@ -25,31 +25,55 @@ export default function Invoices() {
     return (
         <>
             <Navbar />
-            <div style={{ padding: 40 }}>
-                <h2>Invoices</h2>
 
-                <select onChange={e => setSelectedOrder(e.target.value)}>
-                    <option value="">Select Sales Order</option>
-                    {salesOrders.map(so => (
-                        <option key={so._id} value={so._id}>
-                            {so.customer?.name} — {so.products.length} item(s)
-                        </option>
-                    ))}
-                </select>
+            <div className="page">
+                <div className="page-header">
+                    <h2 className="page-title">Invoices</h2>
+                </div>
 
-                <br /><br />
-                <button onClick={generateInvoice}>Generate Invoice</button>
+                <div className="card">
+                    <div className="form-group">
+                        <label>Select Sales Order</label>
+                        <select
+                            value={selectedOrder}
+                            onChange={e => setSelectedOrder(e.target.value)}
+                        >
+                            <option value="">Select Sales Order</option>
+                            {salesOrders.map(so => (
+                                <option key={so._id} value={so._id}>
+                                    {so.customer?.name} — {so.products.length} item(s)
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                <hr />
+                    <button className="btn primary" onClick={generateInvoice}>
+                        Generate Invoice
+                    </button>
+                </div>
 
-                <h4>Generated Invoices</h4>
-                <ul>
-                    {invoices.map(inv => (
-                        <li key={inv._id}>
-                            Invoice #{inv._id.slice(-5)} — {inv.customer?.name}
-                        </li>
-                    ))}
-                </ul>
+                <div className="card">
+                    <h4 className="page-title" style={{ fontSize: "18px" }}>
+                        Generated Invoices
+                    </h4>
+
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Customer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {invoices.map(inv => (
+                                <tr key={inv._id}>
+                                    <td>#{inv._id.slice(-5)}</td>
+                                    <td>{inv.customer?.name}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     );
