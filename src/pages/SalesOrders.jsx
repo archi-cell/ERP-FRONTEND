@@ -34,45 +34,80 @@ export default function SalesOrders() {
     return (
         <>
             <Navbar />
-            <div style={{ padding: 40 }}>
-                <h2>Sales Orders</h2>
 
-                <select onChange={e => setCustomer(e.target.value)}>
-                    <option value="">Select Customer</option>
-                    {customers.map(c => (
-                        <option key={c._id} value={c._id}>{c.name}</option>
-                    ))}
-                </select>
+            <div className="page">
+                <div className="page-header">
+                    <h2 className="page-title">Sales Orders</h2>
+                </div>
 
-                <br /><br />
+                <div className="card">
+                    <div className="form-group">
+                        <label>Customer</label>
+                        <select
+                            value={customer}
+                            onChange={e => setCustomer(e.target.value)}
+                        >
+                            <option value="">Select Customer</option>
+                            {customers.map(c => (
+                                <option key={c._id} value={c._id}>
+                                    {c.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                <select onChange={e => setProduct(e.target.value)}>
-                    <option value="">Select Product</option>
-                    {products.map(p => (
-                        <option key={p._id} value={p._id}>{p.name}</option>
-                    ))}
-                </select>
+                    <div className="form-group">
+                        <label>Product</label>
+                        <select
+                            value={product}
+                            onChange={e => setProduct(e.target.value)}
+                        >
+                            <option value="">Select Product</option>
+                            {products.map(p => (
+                                <option key={p._id} value={p._id}>
+                                    {p.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                <br /><br />
+                    <div className="form-group">
+                        <label>Quantity</label>
+                        <input
+                            type="number"
+                            min="1"
+                            value={quantity}
+                            onChange={e => setQuantity(e.target.value)}
+                        />
+                    </div>
 
-                <input type="number"
-                    value={quantity}
-                    onChange={e => setQuantity(e.target.value)}
-                />
+                    <button className="btn primary" onClick={createOrder}>
+                        Create Sales Order
+                    </button>
+                </div>
 
-                <br /><br />
-                <button onClick={createOrder}>Create Sales Order</button>
+                <div className="card">
+                    <h4 className="page-title" style={{ fontSize: "18px" }}>
+                        Existing Sales Orders
+                    </h4>
 
-                <hr />
-
-                <h4>Existing Sales Orders</h4>
-                <ul>
-                    {orders.map(o => (
-                        <li key={o._id}>
-                            {o.customer?.name} — {o.products.length} item(s)
-                        </li>
-                    ))}
-                </ul>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Items</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orders.map(o => (
+                                <tr key={o._id}>
+                                    <td>{o.customer?.name}</td>
+                                    <td>{o.products.length}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     );
