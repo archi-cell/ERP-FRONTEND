@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import Navbar from "../components/Navbar";
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -21,19 +22,46 @@ export default function Products() {
     }, []);
 
     return (
-        <div style={{ padding: 40 }}>
-            <h2>Products</h2>
+        <>
+            <Navbar />
 
-            <input
-                placeholder="Product name"
-                value={name}
-                onChange={e => setName(e.target.value)}
-            />
-            <button onClick={addProduct}>Add</button>
+            <div className="page">
+                <div className="page-header">
+                    <h2 className="page-title">Products</h2>
+                </div>
 
-            <ul>
-                {products.map(p => <li key={p._id}>{p.name}</li>)}
-            </ul>
-        </div>
+                <div className="card">
+                    <div className="form-group">
+                        <label>Product Name</label>
+                        <input
+                            placeholder="Enter product name"
+                            value={name}
+                            onChange={e => setName(e.target.value)}
+                        />
+                    </div>
+
+                    <button className="btn primary" onClick={addProduct}>
+                        Add Product
+                    </button>
+                </div>
+
+                <div className="card">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products.map(p => (
+                                <tr key={p._id}>
+                                    <td>{p.name}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </>
     );
 }
