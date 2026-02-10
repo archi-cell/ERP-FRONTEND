@@ -1,0 +1,11 @@
+:root {
+    --bg-main: #f4f6fb;
+    --bg-card: #ffffff;
+    --primary: #4f46e5;
+    --primary-soft: #eef2ff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-soft: #e5e7eb;
+    --radius: 14px;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
