@@ -23,20 +23,32 @@ export default function GRN() {
     return (
         <>
             <Navbar />
-            <div style={{ padding: 40 }}>
-                <h2>Goods Received Note (GRN)</h2>
 
-                <select onChange={e => setSelectedPO(e.target.value)}>
-                    <option value="">Select Purchase Order</option>
-                    {purchaseOrders.map(po => (
-                        <option key={po._id} value={po._id}>
-                            {po.supplier?.name} — {po.products.length} item(s)
-                        </option>
-                    ))}
-                </select>
+            <div className="page">
+                <div className="page-header">
+                    <h2 className="page-title">Goods Received Note (GRN)</h2>
+                </div>
 
-                <br /><br />
-                <button onClick={receiveGoods}>Receive Goods</button>
+                <div className="card">
+                    <div className="form-group">
+                        <label>Select Purchase Order</label>
+                        <select
+                            value={selectedPO}
+                            onChange={e => setSelectedPO(e.target.value)}
+                        >
+                            <option value="">Select Purchase Order</option>
+                            {purchaseOrders.map(po => (
+                                <option key={po._id} value={po._id}>
+                                    {po.supplier?.name} — {po.products.length} item(s)
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <button className="btn primary" onClick={receiveGoods}>
+                        Receive Goods
+                    </button>
+                </div>
             </div>
         </>
     );
