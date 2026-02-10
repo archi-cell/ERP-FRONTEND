@@ -9,15 +9,18 @@ export default function Dashboard() {
         api.get("/dashboard").then(res => setStats(res.data));
     }, []);
 
-    if (!stats) return <p>Loading...</p>;
+    if (!stats) return <p className="page">Loading...</p>;
 
     return (
         <>
             <Navbar />
-            <div style={{ padding: 40 }}>
-                <h2>ERP Dashboard</h2>
 
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+            <div className="page">
+                <div className="page-header">
+                    <h2 className="page-title">ERP Dashboard</h2>
+                </div>
+
+                <div className="dashboard-grid">
                     <Card title="Products" value={stats.products} />
                     <Card title="Customers" value={stats.customers} />
                     <Card title="Suppliers" value={stats.suppliers} />
@@ -33,14 +36,9 @@ export default function Dashboard() {
 
 function Card({ title, value }) {
     return (
-        <div style={{
-            border: "1px solid #ccc",
-            padding: 20,
-            borderRadius: 8,
-            textAlign: "center"
-        }}>
+        <div className="dashboard-card">
             <h4>{title}</h4>
-            <h2>{value}</h2>
+            <span>{value}</span>
         </div>
     );
 }
