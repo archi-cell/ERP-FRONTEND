@@ -2,31 +2,14 @@ import { useEffect, useState } from "react";
 import api from "../services/api";
 import Navbar from "../components/Navbar";
 
-export default function Customers() {
-    const [customers, setCustomers] = useState([]);
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-
-    const loadCustomers = async () => {
-        const res = await api.get("/customers");
-        setCustomers(res.data);
-    };
-
-    const addCustomer = async () => {
-        if (!name || !email) {
-            alert("All fields required");
-            return;
-        }
-
-        await api.post("/customers", { name, email });
-        setName("");
-        setEmail("");
-        loadCustomers();
-    };
+export default function Dashboard() {
+    const [stats, setStats] = useState(null);
 
     useEffect(() => {
-        loadCustomers();
+        api.get("/dashboard").then(res => setStats(res.data));
     }, []);
+
+    if (!stats) return <p className="page">Loading...</p>;
 
     return (
         <>
@@ -34,53 +17,28 @@ export default function Customers() {
 
             <div className="page">
                 <div className="page-header">
-                    <h2 className="page-title">Customers</h2>
-                    <button className="btn primary" onClick={addCustomer}>
-                        Add Customer
-                    </button>
+                    <h2 className="page-title">ERP Dashboard</h2>
                 </div>
 
-                <div className="card">
-                    <div className="form-group">
-                        <label>Customer Name</label>
-                        <input
-                            type="text"
-                            placeholder="Enter customer name"
-                            value={name}
-                            onChange={e => setName(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Customer Email</label>
-                        <input
-                            type="email"
-                            placeholder="Enter customer email"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div className="card">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {customers.map(c => (
-                                <tr key={c._id}>
-                                    <td>{c.name}</td>
-                                    <td>{c.email}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="dashboard-grid">
+                    <Card title="Products" value={stats.products} />
+                    <Card title="Customers" value={stats.customers} />
+                    <Card title="Suppliers" value={stats.suppliers} />
+                    <Card title="Sales Orders" value={stats.salesOrders} />
+                    <Card title="Purchase Orders" value={stats.purchaseOrders} />
+                    <Card title="Inventory Items" value={stats.inventoryItems} />
+                    <Card title="Invoices" value={stats.invoices} />
                 </div>
             </div>
         </>
+    );
+}
+
+function Card({ title, value }) {
+    return (
+        <div className="dashboard-card">
+            <h4>{title}</h4>
+            <span>{value}</span>
+        </div>
     );
 }
