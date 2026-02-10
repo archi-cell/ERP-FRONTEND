@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import Navbar from "../components/Navbar";
 
 export default function Users() {
     const [users, setUsers] = useState([]);
@@ -31,50 +32,80 @@ export default function Users() {
     }, []);
 
     return (
-        <div style={{ padding: 40 }}>
-            <h2>User Management (Admin)</h2>
+        <>
+            <Navbar />
 
-            <h4>Create User</h4>
-            <input placeholder="Name"
-                value={form.name}
-                onChange={e => setForm({ ...form, name: e.target.value })}
-            />
-            <br /><br />
+            <div className="page">
+                <div className="page-header">
+                    <h2 className="page-title">User Management</h2>
+                </div>
 
-            <input placeholder="Email"
-                value={form.email}
-                onChange={e => setForm({ ...form, email: e.target.value })}
-            />
-            <br /><br />
+                {/* FORM CARD */}
+                <div className="card">
+                    <div className="form-group">
+                        <label>Name</label>
+                        <input
+                            value={form.name}
+                            onChange={e => setForm({ ...form, name: e.target.value })}
+                        />
+                    </div>
 
-            <input type="password" placeholder="Password"
-                value={form.password}
-                onChange={e => setForm({ ...form, password: e.target.value })}
-            />
-            <br /><br />
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input
+                            value={form.email}
+                            onChange={e => setForm({ ...form, email: e.target.value })}
+                        />
+                    </div>
 
-            <select
-                value={form.role}
-                onChange={e => setForm({ ...form, role: e.target.value })}
-            >
-                <option value="ADMIN">ADMIN</option>
-                <option value="MANAGER">MANAGER</option>
-                <option value="EMPLOYEE">EMPLOYEE</option>
-            </select>
-            <br /><br />
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={form.password}
+                            onChange={e => setForm({ ...form, password: e.target.value })}
+                        />
+                    </div>
 
-            <button onClick={createUser}>Create User</button>
+                    <div className="form-group">
+                        <label>Role</label>
+                        <select
+                            value={form.role}
+                            onChange={e => setForm({ ...form, role: e.target.value })}
+                        >
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="MANAGER">MANAGER</option>
+                            <option value="EMPLOYEE">EMPLOYEE</option>
+                        </select>
+                    </div>
 
-            <hr />
+                    <button className="btn primary" onClick={createUser}>
+                        Create User
+                    </button>
+                </div>
 
-            <h4>Existing Users</h4>
-            <ul>
-                {users.map(u => (
-                    <li key={u._id}>
-                        {u.name} — {u.email} — {u.role}
-                    </li>
-                ))}
-            </ul>
-        </div>
+                {/* USERS TABLE */}
+                <div className="card">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map(u => (
+                                <tr key={u._id}>
+                                    <td>{u.name}</td>
+                                    <td>{u.email}</td>
+                                    <td>{u.role}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </>
     );
 }
