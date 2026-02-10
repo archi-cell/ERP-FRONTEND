@@ -31,34 +31,55 @@ export default function Customers() {
     return (
         <>
             <Navbar />
-            <div style={{ padding: 40 }}>
-                <h2>Customers</h2>
 
-                <input
-                    placeholder="Customer Name"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                />
-                <br /><br />
+            <div className="page">
+                <div className="page-header">
+                    <h2 className="page-title">Customers</h2>
+                    <button className="btn primary" onClick={addCustomer}>
+                        Add Customer
+                    </button>
+                </div>
 
-                <input
-                    placeholder="Customer Email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                />
-                <br /><br />
+                <div className="card">
+                    <div className="form-group">
+                        <label>Customer Name</label>
+                        <input
+                            type="text"
+                            placeholder="Enter customer name"
+                            value={name}
+                            onChange={e => setName(e.target.value)}
+                        />
+                    </div>
 
-                <button onClick={addCustomer}>Add Customer</button>
+                    <div className="form-group">
+                        <label>Customer Email</label>
+                        <input
+                            type="email"
+                            placeholder="Enter customer email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                    </div>
+                </div>
 
-                <hr />
-
-                <ul>
-                    {customers.map(c => (
-                        <li key={c._id}>
-                            {c.name} — {c.email}
-                        </li>
-                    ))}
-                </ul>
+                <div className="card">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {customers.map(c => (
+                                <tr key={c._id}>
+                                    <td>{c.name}</td>
+                                    <td>{c.email}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     );
