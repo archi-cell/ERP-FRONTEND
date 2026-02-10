@@ -25,25 +25,36 @@ export default function Login() {
     };
 
     return (
-        <div style={{ padding: 40 }}>
-            <h2>ERP Login</h2>
+        <div className="page" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div className="card" style={{ width: "360px" }}>
+                <h2 className="page-title" style={{ textAlign: "center" }}>
+                    ERP Login
+                </h2>
 
-            <input
-                placeholder="Email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-            />
-            <br /><br />
+                <div className="form-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        placeholder="Enter email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                </div>
 
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-            />
-            <br /><br />
+                <div className="form-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                </div>
 
-            <button onClick={handleLogin}>Login</button>
+                <button className="btn primary" onClick={handleLogin} style={{ width: "100%" }}>
+                    Login
+                </button>
+            </div>
         </div>
     );
 }
